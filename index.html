@@ -15,7 +15,8 @@
             <h3 style="margin-top: 15px; white-space: nowrap; margin-left: 10px; font-family: 'Aldrich', sans-serif; font-size: 20px; color: #000000;">Room Temp</h3>
             <h2 id="miniDisplay"style="grid-area: RT2; margin-top: 5px; font-family: 'Aldrich', sans-serif; text-align: center; font-size: 43px; margin-left: 10px; color: #000000;">---</h2>
             <h2 id="mainDisplay" style="font-family: 'Aldrich', sans-serif; margin-left: -6.284%; font-size: 65px; margin-top: 10px; color: #000000;">- - -</h2>
-        </section>
+	    <h3 id="recivedSymbol" style="display: none; grid-area: ST2; margin-right: 5px; text-align: right; margin-top: 30px; font-family: 'Aldrich', sans-serif;  font-size: 30px; color: #009959;">R</h3>
+    </section>
         <section style="display: grid; grid-template-columns: 1fr 0fr 1fr; grid-template-rows: 130px 110px 90px; max-width: 276px; text-align: center; margin-left: auto; margin-right: auto; margin-top: 120px;">
             <img onclick="fanOn()"src="/images/Fan.png" style="grid-area: 2 / 3 / 3 / 4; width: 70px; margin-left: 10px; margin-top: 20px;"/>
             <img onclick="timeDialog()" src="/images/Time.png" style="grid-area:2 / 1 / 3 / 2;"/>
@@ -110,8 +111,12 @@ function getCode(){
 	var xmlHttp = new XMLHttpRequest();
 	xmlHttp.open( "GET", "https://c1hcy535.caspio.com/dp/441db000db181ad58c964df0ad85?cbqe=QXBwS2V5PTQ0MWRiMDAwZGIxODFhZDU4Yzk2NGRmMGFkODUmanM9dHJ1ZSZjYkVtYkRlcGxveVdpdGg9bmV3X2FzeW5jX2VtYmVkanMmY2JEYXRhcGFnZUFuY2hvcklkPWRwX2FuY2hvcl9pZF8xMDQxMTAwMDAmcGF0aG5hbWU9ZmlsZTovLy9DOi9Vc2Vycy9tcmsvRGVza3RvcC9HaXRIdWIvQmxvZ3N0eWxlJTIwcGFnZSUyMC0lMjBDb3B5L2luZGV4Lmh0bWwmY2JTY3JlZW5XaWR0aD0xOTIwJmNiRW1iUXVlcnlTdHI9JmNiUGFyYW1MaXN0PQ==&cbEmbedTimeStamp=1664541762095", false );
 	xmlHttp.send( null );
-	var indx = xmlHttp.responseText.search("~")+8;
-	stateCode= xmlHttp.responseText.slice(indx , indx +3);
+	var indx = xmlHttp.responseText.search("~")+2;
+	if (xmlHttp.responseText.slice(indx , indx +3)=="RST"){
+	document.getElementById("recivedSymbol").style.display = "grid";
+	}else{
+	document.getElementById("recivedSymbol").style.display = "none";}
+	stateCode= xmlHttp.responseText.slice(indx+6 , indx +9);
 	var mainDisp=document.getElementById("mainDisplay");
 	var dispSect=document.getElementById("displaySection");
 	if (stateCode.slice(0 , 1)==1){
